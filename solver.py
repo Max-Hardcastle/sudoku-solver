@@ -1,14 +1,22 @@
-board = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-]
+def parse_puzzle(puzzle):
+    if len(puzzle) != 81:
+        raise ValueError("Error: Puzzle must be exactly 81 characters")
+    
+    board = []
+
+    for i in range (0, 81, 9):
+        row = []
+
+        for n in puzzle[i:i+9]:
+            if n in "0.":
+                row.append(0)
+            elif n.isdigit():
+                row.append(int(n))
+            else: raise ValueError("Error: Puzzle must contain digits or full stops only")
+        board.append(row)
+
+    return board
+
 
 def print_board(board):
     for row in board:
@@ -69,11 +77,15 @@ def solve(board):
     return False
 
 
-print("Original board:")
-print_board(board)
+if __name__ == "__main__":
+    puzzle = input("Enter Sudoku puzzle in format: 82 chars, using 0 or . for blanks:\n")
+    board = parse_puzzle(puzzle)
 
-if solve(board):
-    print("\nSolved board:")
+    print("\nOriginal board:")
     print_board(board)
-else:
-    print("No solution exists")
+
+    if solve(board):
+        print("\nSolved board:")
+        print_board(board)
+    else:
+        print("No solution exists")
