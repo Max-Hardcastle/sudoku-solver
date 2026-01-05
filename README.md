@@ -12,7 +12,7 @@ Command line Sudoku solver written in Python using a backtracking algorithm
 - The solver continues until the puzzle is solved or all possibilities have been exhausted
 
 ## Usage
-- Run the solver in command line: python solver.py
+- Run the solver from the command line: python cli.py
 - When prompted, enter valid Sudoku string. E.g.: 530070000600195000098000060800060003400803001700020006060000280000419005000080279
 
 ## Requirements
