@@ -58,12 +58,40 @@ def find_empty(board):
     
     return None
 
-def solve(board):
+def is_board_valid(board):
 
+    valid = [1,2,3,4,5,6,7,8,9]
+
+    # Sort each row and check it contains 1-9
+    for row in range(0, 9):
+        if sorted(board[row]) != valid:
+            return False
+
+    # Sort each column and check it contains 1-9    
+    for col in range(0, 9):
+        col_vals = [board[row][col] for row in range(9)]
+        if sorted(col_vals) != valid:
+            return False
+        
+    # Loop through each 3x3 check it contains 1-9
+    for row_start in range(0, 9, 3):
+        for col_start in range(0, 9, 3):
+            grid_tocheck = []
+            for r in range(0,3):
+                for c in range(0,3):
+                    grid_tocheck.append(board[row_start + r][col_start + c])
+            if sorted(grid_tocheck) != valid:
+                return False
+    
+    return True
+        
+    
+def solve(board):
     empty = find_empty(board)
 
+    #Check that completed boards are valid
     if empty is None:
-        return True
+        return is_board_valid(board)
     
     row, col = empty
 
@@ -79,3 +107,17 @@ def solve(board):
             board[row][col] = 0
     
     return False
+
+
+if __name__ == "__main__":
+    puzzle = input("Enter Sudoku puzzle in format: 81 chars, using 0 or . for blanks:\n")
+    board = parse_puzzle(puzzle)
+
+    print("\nOriginal board:")
+    print_board(board)
+
+    if solve(board):
+        print("\nSolved board:")
+        print_board(board)
+    else:
+        print("No solution exists")
