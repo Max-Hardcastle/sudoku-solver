@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sudoku Solver</title>
+  </head>
+  <body>
+    <h1>Sudoku Solver</h1>
+
+    <form method="post">
+      <label for="puzzle">Enter puzzle (81 chars, 0 or . for blanks):</label><br>
+      <textarea id="puzzle" name="puzzle" rows="3" cols="90">{{ puzzle }}</textarea><br><br>
+      <button type="submit">Solve</button>
+    </form>
+
+    <!-- Puzzle variable is initially empty (false), only shows if populated -->
+    {% if puzzle %}
+      <h2>You entered:</h2>
+      <pre>{{ puzzle }}</pre>
+    {% endif %}
+
+    <!-- If there is a solution, display -->
+    {% if solution %}
+      <h2>Solution:</h2>
+      <pre>{{ solution }}</pre>
+    {% endif %}
+
+    <!-- If there is an error, including if there is no solution, display -->
+    {% if error %}
+      <h2>Error:</h2>
+      <pre>{{ error }}</pre>
+    {% endif %}
+
+  </body>
+</html>

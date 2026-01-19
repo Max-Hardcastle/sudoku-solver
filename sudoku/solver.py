@@ -1,4 +1,5 @@
 def parse_puzzle(puzzle):
+    puzzle = puzzle.strip()
     if len(puzzle) != 81:
         raise ValueError("Error: Puzzle must be exactly 81 characters")
     
@@ -16,7 +17,41 @@ def parse_puzzle(puzzle):
             else: raise ValueError("Error: Puzzle must contain digits or full stops only")
         board.append(row)
 
+    check_initial_puzzle(board)
     return board
+    
+
+#Function to check the entered puzzle is valid, to prevent long backtracking for impossible puzzles
+def check_initial_puzzle(board):
+
+    #Check each row for duplicates
+    for row in range(0, 9):
+        nums = [n for n in board[row] if n != 0]
+        if len(nums) != len(set(nums)):
+            raise ValueError(f"Error: Invalid starting board, duplicate in row {row+1}")
+
+    #Check each column for duplicates  
+    for col in range(0, 9):
+        col_vals = [board[row][col] for row in range(9)]
+        col_vals = [n for n in col_vals if n != 0]
+
+        if len(col_vals) != len(set(col_vals)):
+            raise ValueError(f"Error: Invalid starting board, duplicate in column {col+1}")
+
+    # Loop through each 3x3 check for duplicates
+    for row_start in range(0, 9, 3):
+        for col_start in range(0, 9, 3):
+            grid_tocheck = []
+            for r in range(0,3):
+                for c in range(0,3):
+                    grid_tocheck.append(board[row_start + r][col_start + c])
+            
+            grid_vals = [n for n in grid_tocheck if n != 0]
+            
+            if len(grid_vals) != len(set(grid_vals)):
+                raise ValueError(f"Error: Invalid starting board, duplicate in grid starting column: {col_start+1} row: {row_start+1}")
+            
+    return True
 
 
 def print_board(board):
@@ -58,6 +93,7 @@ def find_empty(board):
     
     return None
 
+#Function to check that completed boards that are inputted are valid
 def is_board_valid(board):
 
     valid = [1,2,3,4,5,6,7,8,9]
@@ -91,7 +127,9 @@ def solve(board):
 
     #Check that completed boards are valid
     if empty is None:
-        return is_board_valid(board)
+        if is_board_valid(board):
+            return board
+        else: return False
     
     row, col = empty
 
@@ -101,23 +139,10 @@ def solve(board):
         if is_valid(board, row, col, n):
             board[row][col] = n
 
-            if solve(board):
-                return True
+            result = solve(board)
+            if result is not False:
+                return result
             
             board[row][col] = 0
     
     return False
-
-
-if __name__ == "__main__":
-    puzzle = input("Enter Sudoku puzzle in format: 81 chars, using 0 or . for blanks:\n")
-    board = parse_puzzle(puzzle)
-
-    print("\nOriginal board:")
-    print_board(board)
-
-    if solve(board):
-        print("\nSolved board:")
-        print_board(board)
-    else:
-        print("No solution exists")
