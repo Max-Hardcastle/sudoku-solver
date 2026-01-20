@@ -6,27 +6,20 @@ app = Flask(__name__)
 def home():
     error = None
     solution = None
-    puzzle = ""
 
-    #On POST request, populate puzzle with what is entered in textarea
+    #9x9 grid for the UI. Strings used for inputs
+    grid = [["" for _ in range(9)] for _ in range(9)]
+
     if request.method == "POST":
-        error = None
-        solution = None
-        puzzle = request.form["puzzle"]
+        for r in range(9):
+            for c in range(9):
+                key = f"cell_{r}_{c}"
+                grid[r][c] = request.form.get(key, "").strip()
 
-    #Parse entered puzzle, attempt to solve, pass solution/no solution/error to html
-        try:
-            board = parse_puzzle(puzzle)
-            solved = solve(board)
-
-            if solved != False:
-                solution = solved
-            else:
-                error = "No solution exists for the entered puzzle"
-        except ValueError as e:
-            error = str(e)
-
-    return render_template("index.html", error=error, solution=solution, puzzle=puzzle)
+    return render_template("index.html",
+                           error=error,
+                           solution=solution,
+                           grid=grid)
 
 
 if __name__ == "__main__":
