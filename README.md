@@ -4,7 +4,7 @@ Command line Sudoku solver written in Python using a backtracking algorithm.
 
 ## How it works
 - The user is prompted to enter a Sudoku puzzle in an 81-character Sudoku grid
-- The grid state is stored, then converted to a string format which is passed to the solver
+- When the 'Solve' button is pressed, the grid state is stored, then converted to a string format which is passed to the solver
 - The solver validates the initial puzzle for row, column, and 3×3 box conflicts. Invalid puzzles fail early with a clear error message, preventing long backtracking on impossible inputs
 - If the board is valid but not complete, the solver finds the first empty cell and attempts each number from 1–9
 - Each attempt is checked against Sudoku rules (row, column, and 3×3 box)
@@ -12,6 +12,7 @@ Command line Sudoku solver written in Python using a backtracking algorithm.
 - This process is performed recursively. If no valid number can be placed, the algorithm backtracks and tries a different choice
 - The solver continues until the puzzle is solved or all possibilities have been exhausted
 - If the puzzle is solved, the grid is populated with the completed puzzle. If it is not possible, an error is displayed.
+- When the 'Clear' button is pressed, the grid state is converted to empty strings and is returned
 
 ## Usage
 - Run the solver from the command line:
@@ -19,6 +20,8 @@ Command line Sudoku solver written in Python using a backtracking algorithm.
 python app.py
 ```
 - When prompted, enter digits into the Sudoku grid
+- Press the 'Solve' button to attempt to solve the puzzle
+- Press the 'Clear' button to reset the grid
 
 ## Testing
 Pytest is used for testing
