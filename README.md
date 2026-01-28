@@ -1,9 +1,13 @@
 # Sudoku Solver
 
-Command line Sudoku solver written in Python using a backtracking algorithm.
+![Sudoku Solver - blank](empty_grid.png)
+![Sudoku Solver - solved](solved_grid.png)
+![Sudoku Solver - solved](error_message_example.png)
+
+A web-based Sudoku solver written in Python using Flask. A backtracking algorithm is used for the solver.
 
 ## How it works
-- The user is prompted to enter a Sudoku puzzle in an 81-character Sudoku grid
+- The user is prompted to enter a Sudoku puzzle in a 9x9 Sudoku grid
 - When the 'Solve' button is pressed, the grid state is stored, then converted to a string format which is passed to the solver
 - The solver validates the initial puzzle for row, column, and 3×3 box conflicts. Invalid puzzles fail early with a clear error message, preventing long backtracking on impossible inputs
 - If the board is valid but not complete, the solver finds the first empty cell and attempts each number from 1–9
@@ -13,6 +17,14 @@ Command line Sudoku solver written in Python using a backtracking algorithm.
 - The solver continues until the puzzle is solved or all possibilities have been exhausted
 - If the puzzle is solved, the grid is populated with the completed puzzle. If it is not possible, an error is displayed.
 - When the 'Clear' button is pressed, the grid state is converted to empty strings and is returned
+
+## What this project demonstrates
+- Algorithmic problem solving using recursive backtracking
+- Input validation and early failure handling
+- Server-side rendering with Flask and Jinja
+- HTTP request/response cycles
+- Separation of UI and solver logic
+- Automated testing with pytest
 
 ## Usage
 - Run the solver from the command line:
@@ -39,5 +51,6 @@ python -m pytest
 ```
 
 ## Requirements
-- Python 3.13.5
+- Python 3.13+
+- Flask
 - pytest
