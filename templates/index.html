@@ -8,10 +8,20 @@
 
 <form method="post">
   <table style="border-collapse: collapse;">
+    <!-- 9x9 Sudoku grid -->
     {% for r in range(9) %}
       <tr>
         {% for c in range(9) %}
-          <td style="border: 1px solid #999; width: 36px; height: 36px; text-align: center;">
+          <!-- Thicker borders every 3 rows/columns to show 3x3 Sudoku boxes -->
+          <td style="
+            border-left: {{ '3px' if c % 3 == 0 else '1px' }} solid black;
+            border-top: {{ '3px' if r % 3 == 0 else '1px' }} solid black;
+            border-right: {{ '3px' if c == 8 else '1px' }} solid black;
+            border-bottom: {{ '3px' if r == 8 else '1px' }} solid black;
+            width: 36px;
+            height: 36px;
+            text-align: center;
+          ">
             <input
               type="text"
               name="cell_{{ r }}_{{ c }}"
@@ -26,6 +36,7 @@
     {% endfor %}
   </table>
 
+  <!-- Action buttons -->
   <br>
   <button type="submit" name="action" value="solve">Solve</button>
   <button type="submit" name="action" value="clear">Clear</button>
